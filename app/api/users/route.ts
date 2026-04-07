@@ -4,8 +4,6 @@ import { NextResponse } from 'next/server';
 export async function GET() {
     try {
         const [rows] = await db_conn.query('SELECT * FROM users');
-        console.log(rows);
-        console.log('Hi');
         return NextResponse.json(rows);
     } catch (error) {
         console.error(error);
