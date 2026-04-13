@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
     const [isLogin, setIsLogin] = useState(true);
@@ -22,6 +22,17 @@ export default function Home() {
         }
     };
 
+    console.log('Rendering form with state:', { isLogin, form });
+
+    useEffect(() => {
+        const cleanForm = () => {
+            console.log('Cleaning form...');
+            setForm({ name: '', email: '', password: '' });
+        };
+
+        cleanForm();
+    }, [isLogin]);
+
     return (
         <div style={{ padding: 20 }}>
             <h1>{isLogin ? 'Login' : 'Signup'}</h1>
@@ -29,18 +40,36 @@ export default function Home() {
             {!isLogin && (
                 <input
                     placeholder="Name"
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    value={form.name}
+                    onChange={(e) =>
+                        setForm((current) => ({
+                            ...current,
+                            name: e.target.value,
+                        }))
+                    }
                 />
             )}
 
             <input
                 placeholder="Email"
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                value={form.email}
+                onChange={(e) =>
+                    setForm((current) => ({
+                        ...current,
+                        email: e.target.value,
+                    }))
+                }
             />
             <input
                 type="password"
                 placeholder="Password"
-                onChange={(e) => setForm({ ...form, password: e.target.value })}
+                value={form.password}
+                onChange={(e) =>
+                    setForm((current) => ({
+                        ...current,
+                        password: e.target.value,
+                    }))
+                }
             />
 
             <button onClick={handleSubmit}>
